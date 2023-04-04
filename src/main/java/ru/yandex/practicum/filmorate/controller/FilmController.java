@@ -29,7 +29,7 @@ public class FilmController {
         newFilm.setId(generateUniqueId);
         filmHashMap.put(newFilm.getId(), newFilm);
         incrementUniqueId();
-        log.info("Фильм создан!");
+        log.info("Create FILM {} success {}!", newFilm.getId(), newFilm);
         return newFilm;
     }
 
@@ -37,12 +37,10 @@ public class FilmController {
     public Film updateFilm(@Valid @RequestBody Film film) {
         if (filmHashMap.containsKey(film.getId())) {
             filmHashMap.put(film.getId(), film);
-            log.info("Фильм обновлен!");
+            log.info("Update FILM {} success: {}", film.getId(), film);
             return film;
         } else {
-            NotFoundException exception = new NotFoundException(String.valueOf(film.getId()));
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NotFoundException(String.valueOf(film.getId()));
         }
     }
 

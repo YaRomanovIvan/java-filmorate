@@ -30,7 +30,7 @@ public class UserController {
         user.setId(generateUniqueId);
         userHashMap.put(user.getId(), user);
         incrementUniqueId();
-        log.info("Пользователь создан!");
+        log.info("Create USER {} success {}!", user.getId(), user);
         return user;
     }
 
@@ -43,12 +43,10 @@ public class UserController {
     public User updateUser(@Valid @RequestBody User user) {
         if (userHashMap.containsKey(user.getId())) {
             userHashMap.put(user.getId(), user);
-            log.info("Пользователь с ID {} обновлен", user.getId());
+            log.info("Update USER {} success {}", user.getId(), user);
             return user;
         } else {
-            NotFoundException exception = new NotFoundException(String.valueOf(user.getId()));
-            log.error(exception.getMessage());
-            throw exception;
+            throw new NotFoundException(String.valueOf(user.getId()));
         }
     }
 
